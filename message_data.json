@@ -1,0 +1,21 @@
+{
+    "messages" : [
+        {
+            "tag" : "greeting", 
+            "keywords" : [
+                "Hello", 
+                "Hi Babe", 
+                "Sup", 
+                "Good Morning", 
+                "Hi",
+                "Hey"
+            ], 
+             "responses" : [
+                "Hello Babe",
+                "How is my darling?",
+                "Hello, how are you?", 
+                "Hey, What you up to?"
+             ]
+        }
+    ]
+}
