@@ -61,7 +61,7 @@
             ]    
         },
         {
-            "tag" : "intents",
+            "tag" : "day_intents",
             "keywords" : [
                 "What are your plans today?", 
                 "What you doing?", 
