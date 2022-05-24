@@ -3,17 +3,20 @@ import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
-from nltk import PorterStemmer, tokenize
+from nltk import PorterStemmer
+from nltk.tokenize import word_tokenize
 import json
 import boto3
 
 class ChatbotDataset(Dataset):
     def __init__(self):
-        self.clean_data()
+        # For each datapoint we need to: drop "xoxox", tokenize, lower, stem, turn into a vector using bag_of_words.  
+        self.extract_data()
 
 
     def __getitem__(self, idx): 
-        pass
+        raw_message = self.messages_list[idx]
+        tokenized_message = word_tokenize(raw_message)
 
     def __len__(self):
         pass 
@@ -24,12 +27,10 @@ class ChatbotDataset(Dataset):
 
         return message_json
 
-    def clean_data(self):
-        # For each datapoint we need to: drop "xoxox", tokenize, lower, stem, turn into a vector using bag_of_words.   
+    def extract_data(self): 
         raw_data = self.get_raw_data('../Data/message_data.json')
 
-        #set_labels = set([message_group['tag'] for message_group in raw_data['messages']])
-        #self.label_mapping = {j: i for i,j in enumerate(set_labels)}
+        # Dictionary to store numerical encoding of labels.
         self.label_mapping = {}
         label_index = 0
 
@@ -51,6 +52,5 @@ class ChatbotDataset(Dataset):
 
 
     def bag_words(self):
-        self.clean_data()
         pass
 
