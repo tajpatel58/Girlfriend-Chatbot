@@ -9,7 +9,7 @@ import boto3
 
 class ChatbotDataset(Dataset):
     def __init__(self):
-        raw_data = self.get_raw_data('../Data/message_data.json')
+        self.clean_data()
 
 
     def __getitem__(self, idx): 
@@ -20,13 +20,14 @@ class ChatbotDataset(Dataset):
     
     def get_raw_data(self, data_path):
         with open(data_path, 'r') as f:
-            message_json = json.loads(f)
+            message_json = json.loads(f.read())
 
         return message_json
 
     def clean_data(self):
         # For each datapoint we need to: drop "xoxox", tokenize, lower, stem, turn into a vector using bag_of_words.   
         raw_data = self.get_raw_data('../Data/message_data.json')
+
         #set_labels = set([message_group['tag'] for message_group in raw_data['messages']])
         #self.label_mapping = {j: i for i,j in enumerate(set_labels)}
         self.label_mapping = {}
@@ -44,11 +45,12 @@ class ChatbotDataset(Dataset):
                 label_index += 1
             
             self.messages_list.extend(message_group['keywords'])
-            self.labels.extend(message_group['tag'] * len(message_group['keywords']))
+            self.labels.extend([message_group['tag']] * len(message_group['keywords']))
             
         self.numeric_labels = [self.label_mapping[label] for label in self.labels]
 
+
     def bag_words(self):
+        self.clean_data()
         pass
-        
 
