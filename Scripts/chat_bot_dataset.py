@@ -51,6 +51,10 @@ class ChatbotDataset(Dataset):
         self.numeric_labels = [self.label_mapping[label] for label in self.labels]
 
 
-    def bag_words(self):
-        pass
+    def clean_data(self):
+        # lower case all messages:
+        self.messages_list = [message.lower() for message in self.messages_list]
+        
 
+    def bag_words(self, tokenized_text):
+        pass
