@@ -26,7 +26,7 @@ class ChatbotDataset(Dataset):
     def __len__(self):
         return len(self.messages_list)
     
-    
+
     def get_raw_data(self, data_path):
         with open(data_path, 'r') as f:
             message_json = json.loads(f.read())
@@ -34,7 +34,7 @@ class ChatbotDataset(Dataset):
         return message_json
 
     def load_data(self): 
-        raw_data = self.get_raw_data('../Data/message_data.json')
+        raw_data = self.get_raw_data('/Users/tajsmac/Documents/Girlfriend-Chatbot/Data/message_data.json')
 
         # Dictionary to store numerical encoding of labels.
         self.label_mapping = {}
@@ -62,7 +62,7 @@ class ChatbotDataset(Dataset):
     def clean_text(self, text):
         lowered_text = text.lower()
         list_text = lowered_text.split(' ')
-        clean_text = [self.ps(word) for word in list_text]
+        clean_text = [self.ps.stem(word) for word in list_text]
         return clean_text 
         
 
@@ -74,7 +74,7 @@ class ChatbotDataset(Dataset):
         self.cleaned_messages_list = []
         for message in self.messages_list:
             cleaned_message = self.clean_text(message)
-            self.cleaned_messages_list = self.cleaned_messages_list.append(cleaned_message)
+            self.cleaned_messages_list.append(cleaned_message)
             self.bag.update(set(cleaned_message))
         self.bag = list(self.bag)
 
