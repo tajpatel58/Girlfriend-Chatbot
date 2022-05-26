@@ -12,16 +12,20 @@ class ChatbotDataset(Dataset):
     def __init__(self):
         # For each datapoint we need to: drop "xoxox", tokenize, lower, stem, turn into a vector using bag_of_words.  
         self.ps = PorterStemmer()
-        self.extract_data()
+        self.load_data()
         self.clean_data()
 
 
-
     def __getitem__(self, idx): 
-        pass
+        cleaned_text = self.cleaned_messages_list[idx]
+        features_vector = self.bag_words(cleaned_text)
+        corresponding_encoded_label = self.numeric_labels[idx]
+        return features_vector, corresponding_encoded_label
+
 
     def __len__(self):
-        pass 
+        return len(self.messages_list)
+    
     
     def get_raw_data(self, data_path):
         with open(data_path, 'r') as f:
@@ -29,7 +33,7 @@ class ChatbotDataset(Dataset):
 
         return message_json
 
-    def extract_data(self): 
+    def load_data(self): 
         raw_data = self.get_raw_data('../Data/message_data.json')
 
         # Dictionary to store numerical encoding of labels.
@@ -75,6 +79,7 @@ class ChatbotDataset(Dataset):
         self.bag = list(self.bag)
 
         self.bag_size = len(self.bag)
+
 
     def bag_words(self, tokenized_text):
         feature_vec = torch.zeros(self.bag_size)
