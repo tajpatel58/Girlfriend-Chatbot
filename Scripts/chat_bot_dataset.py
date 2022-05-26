@@ -67,12 +67,21 @@ class ChatbotDataset(Dataset):
         self.bag = set()
 
         # list to hold cleaned messages:
-        self.cleaned_messages_list
+        self.cleaned_messages_list = []
         for message in self.messages_list:
             cleaned_message = self.clean_text(message)
-            self.cleaned_messages = self.cleaned_messages_list.append(cleaned_message)
+            self.cleaned_messages_list = self.cleaned_messages_list.append(cleaned_message)
             self.bag.update(set(cleaned_message))
         self.bag = list(self.bag)
 
+        self.bag_size = len(self.bag)
+
     def bag_words(self, tokenized_text):
-        pass
+        feature_vec = torch.zeros(self.bag_size)
+        for idx, word in enumerate(self.bag):
+            if word in tokenized_text:
+                feature_vec[idx] = 1
+            else:
+                continue
+        
+        return feature_vec
