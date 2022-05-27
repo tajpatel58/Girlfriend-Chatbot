@@ -60,8 +60,8 @@ class ChatbotDataset(Dataset):
         self.numeric_labels = [self.label_mapping[label] for label in self.labels]
 
         #Number of classes:
-        self.num_class = label_index - 1
-        
+        self.num_classses = label_index - 1
+
 
     def clean_text(self, text):
         lowered_text = text.lower()
