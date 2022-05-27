@@ -38,6 +38,7 @@ class ChatbotDataset(Dataset):
 
         # Dictionary to store numerical encoding of labels.
         self.label_mapping = {}
+        #label_index increments everytime a new label/tag is seen. 
         label_index = 1
 
         # list to store each message in dataset:
@@ -58,6 +59,9 @@ class ChatbotDataset(Dataset):
         # Get numerical encoding of labels
         self.numeric_labels = [self.label_mapping[label] for label in self.labels]
 
+        #Number of classes:
+        self.num_class = label_index - 1
+        
 
     def clean_text(self, text):
         lowered_text = text.lower()
