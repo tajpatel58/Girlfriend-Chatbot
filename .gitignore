@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Remove Tensboard Runs:
+Scripts/runs
+.DS_Store
