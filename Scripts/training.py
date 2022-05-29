@@ -27,3 +27,13 @@ model = NeuralNet()
 #Initialise Optimizer and loss(recall - CrossEntropy applies Crossmax for us):
 optimizer = Adam(model.parameters(), lr=learning_rate)
 loss = nn.CrossEntropyLoss()
+
+#Training Loop:
+for epoch in num_epochs:
+    for batch_no, (data, labels) in enumerate(train_loader):
+        batch_no += 1
+        predictions = model(data)
+        error = loss(predictions, labels)
+        error.backward()
+        optimizer.step()
+        optimizer.zero_grad()
