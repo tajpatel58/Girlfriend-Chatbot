@@ -29,3 +29,5 @@ Creating a chatbot to speak to my girlfriend. Fun mini project to combine my NLP
 - Running the training loop by passing in data in batches of 6. 
 - I'll store the model parameters for the model with the best test accuracy. 
 - Using the Adam Optimizer.
+
+![plot](./Tensorboard_Graphics/Chatbot_Train_Loss.png)
