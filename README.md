@@ -19,3 +19,13 @@ Creating a chatbot to speak to my girlfriend. Fun mini project to combine my NLP
     2. Remove combinations of "x"s and "o"s at the end of messages. As they hold no information as to which category messages belong in. 
     3. Tokenize
     4. Apply Lematization or Stemming, most likely the latter, as often in messages words are extended for no reason, eg: "Goooood Morninggg".
+
+
+### Step 3: Building the Model:
+- I'll be using a relatively simple Neural Network initially and depending on model/chatbot performance, I can ammend. 
+- The net will be formed with 2 hidden layers, first with 10 units and the second with 6 units. 
+
+### Step 4: Training Loop: 
+- Running the training loop by passing in data in batches of 6. 
+- I'll store the model parameters for the model with the best test accuracy. 
+- Using the Adam Optimizer.
