@@ -66,4 +66,21 @@ def train(model, optim, loss_func, number_of_epochs=100):
 
     return model
 
-train(nn_model, optimizer, loss, number_of_epochs=num_epochs)
+trained_model = train(nn_model, optimizer, loss, number_of_epochs=1000)
+
+# Once we complete the training loop, we want to store some of the parameters like the "bag" so that once the bot is built, 
+# and a new message comes in, this can be turned into a feature vector and passed through our model. 
+chat_model = {
+    'net' : trained_model.state_dict(), 
+    'input_size' : input_size, 
+    'hidden_size_1' : hidden_layer_1, 
+    'hidden_size_2' : hidden_layer_2, 
+    'output_size' : num_classes, 
+    'bag' : train_data.bag,
+    'label_mapping' : train_data.label_mapping
+}
+
+FILE = '../Models/chat_model.pth'
+torch.save(chat_model, FILE)
+
+print(f'Trained Model saved to {FILE}')
