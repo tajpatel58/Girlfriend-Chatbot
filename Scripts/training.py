@@ -2,6 +2,7 @@
 import torch
 import torch.nn as nn
 import copy
+import os
 from chat_bot_dataset import ChatbotDataset
 from torch.utils.data import DataLoader
 from torch.optim import Adam
@@ -82,5 +83,5 @@ chat_model = {
 
 FILE = '../Models/chat_model.pth'
 torch.save(chat_model, FILE)
-
-print(f'Trained Model saved to {FILE}')
+absolute_path = os.path.abs('../Models/chat_model.pth')
+print(f'Trained Model saved to {absolute_path}')
