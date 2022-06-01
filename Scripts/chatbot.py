@@ -22,3 +22,6 @@ model = NeuralNet(num_features, hidden_layer_1, hidden_layer_2, num_classes)
 
 #Change randomised model parameters to trained params:
 model.load_state_dict(trained_params)
+
+# Set model to evaluation mode:
+model.eval()

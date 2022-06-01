@@ -78,7 +78,8 @@ chat_model = {
     'hidden_size_2' : hidden_layer_2, 
     'output_size' : num_classes, 
     'bag' : train_data.bag,
-    'label_mapping' : train_data.label_mapping
+    'label_mapping' : train_data.label_mapping, 
+    'raw_data' : train_data.raw_data
 }
 
 FILE = '../Models/chat_model.pth'

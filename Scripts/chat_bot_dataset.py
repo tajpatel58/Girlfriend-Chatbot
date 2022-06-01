@@ -6,19 +6,17 @@ import numpy as np
 from nltk.stem import PorterStemmer
 from nltk.tokenize import word_tokenize
 import json
-import boto3
+from text_cleaning import clean_text, bag_of_words
 
 class ChatbotDataset(Dataset):
     def __init__(self):
-        # For each datapoint we need to: drop "xoxox", tokenize, lower, stem, turn into a vector using bag_of_words.  
-        self.ps = PorterStemmer()
         self.load_data()
         self.clean_data()
 
 
     def __getitem__(self, idx): 
         cleaned_text = self.cleaned_messages_list[idx]
-        features_vector = self.bag_words(cleaned_text)
+        features_vector = bag_of_words(cleaned_text)
         corresponding_encoded_label = self.numeric_labels[idx]
         return features_vector, corresponding_encoded_label
 
@@ -33,8 +31,9 @@ class ChatbotDataset(Dataset):
 
         return message_json
 
+
     def load_data(self): 
-        raw_data = self.get_raw_data('/Users/tajsmac/Documents/Girlfriend-Chatbot/Data/message_data.json')
+        self.raw_data = self.get_raw_data('/Users/tajsmac/Documents/Girlfriend-Chatbot/Data/message_data.json')
 
         # Dictionary to store numerical encoding of labels.
         self.label_mapping = {}
@@ -47,7 +46,7 @@ class ChatbotDataset(Dataset):
         #list to store message_labels:
         self.labels = []
         
-        for message_group in raw_data['messages']:
+        for message_group in self.raw_data['messages']:
             # create a numerical encoding for message tags.
             if message_group['tag'] not in self.label_mapping:
                 self.label_mapping[message_group['tag']] = label_index
@@ -63,13 +62,6 @@ class ChatbotDataset(Dataset):
         self.num_classses = label_index
 
 
-    def clean_text(self, text):
-        lowered_text = text.lower()
-        list_text = lowered_text.split(' ')
-        clean_text = [self.ps.stem(word) for word in list_text]
-        return clean_text 
-        
-
     def clean_data(self):
         # Clean up all messages and extracting "bag" for bag of words:
         self.bag = set()
@@ -77,20 +69,8 @@ class ChatbotDataset(Dataset):
         # list to hold cleaned messages:
         self.cleaned_messages_list = []
         for message in self.messages_list:
-            cleaned_message = self.clean_text(message)
+            cleaned_message = clean_text(message)
             self.cleaned_messages_list.append(cleaned_message)
             self.bag.update(set(cleaned_message))
         self.bag = list(self.bag)
-
         self.bag_size = len(self.bag)
-
-
-    def bag_words(self, tokenized_text):
-        feature_vec = torch.zeros(self.bag_size)
-        for idx, word in enumerate(self.bag):
-            if word in tokenized_text:
-                feature_vec[idx] = 1
-            else:
-                continue
-        
-        return feature_vec
