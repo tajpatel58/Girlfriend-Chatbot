@@ -6,7 +6,7 @@ class DatasetTestCase(unittest.TestCase):
         self.dataset = ChatbotDataset()
     
     def test_label_mapping(self):
-        labels = self.dataset.label_mapping
+        labels = list(self.dataset.label_mapping.keys())
         all_labels = ['greeting', 'working_day', 'feelings_or_actions', 'goodbye', 
              'day_intents', 'food_intents', 'food_response', 
              'morning_greeting', 'goodbye_night']
