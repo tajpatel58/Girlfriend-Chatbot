@@ -82,7 +82,7 @@ chat_model = {
     'raw_data' : train_data.raw_data
 }
 
-FILE = '../Models/chat_model.pth'
+FILE = './Models/chat_model.pth'
 torch.save(chat_model, FILE)
-absolute_path = os.path.abs('../Models/chat_model.pth')
+absolute_path = os.path.abspath('./Models/chat_model.pth')
 print(f'Trained Model saved to {absolute_path}')

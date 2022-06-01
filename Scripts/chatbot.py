@@ -1,8 +1,9 @@
 #Import Packages:
 import torch
 import json
-from model import NeuralNet
-from training import absolute_path
+from Scripts.model import NeuralNet
+from Scripts.training import absolute_path
+from Scripts.text_cleaning import clean_text, bag_of_words
 
 
 # Load in the trained model:
@@ -16,6 +17,7 @@ num_classes = chatbot_model['output_size']
 bag = chatbot_model['bag']
 label_mapping = chatbot_model['label_mapping']
 trained_params = chatbot_model['net']
+raw_data = chatbot_model['raw_data']
 
 #Load in an untrained model:
 model = NeuralNet(num_features, hidden_layer_1, hidden_layer_2, num_classes)

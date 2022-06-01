@@ -6,17 +6,18 @@ import numpy as np
 from nltk.stem import PorterStemmer
 from nltk.tokenize import word_tokenize
 import json
-from text_cleaning import clean_text, bag_of_words
+from Scripts.text_cleaning import clean_text, bag_of_words
 
 class ChatbotDataset(Dataset):
     def __init__(self):
+        self.stemmer = PorterStemmer()
         self.load_data()
         self.clean_data()
 
 
     def __getitem__(self, idx): 
         cleaned_text = self.cleaned_messages_list[idx]
-        features_vector = bag_of_words(cleaned_text)
+        features_vector = bag_of_words(cleaned_text, self.bag)
         corresponding_encoded_label = self.numeric_labels[idx]
         return features_vector, corresponding_encoded_label
 
@@ -69,7 +70,7 @@ class ChatbotDataset(Dataset):
         # list to hold cleaned messages:
         self.cleaned_messages_list = []
         for message in self.messages_list:
-            cleaned_message = clean_text(message)
+            cleaned_message = clean_text(message, self.stemmer)
             self.cleaned_messages_list.append(cleaned_message)
             self.bag.update(set(cleaned_message))
         self.bag = list(self.bag)
