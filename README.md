@@ -31,3 +31,8 @@ Creating a chatbot to speak to my girlfriend. Fun mini project to combine my NLP
 - Using the Adam Optimizer.
 
 ![plot](./Tensorboard_Graphics/Chatbot_Train_Loss.png)
+
+### Step 5: Using Model: 
+- Once model has been trained can store the relevant parameters: trained parameters, the "bag", the raw_data etc.
+- I created a new Chatbot class which loads in the trained parameters and has a "respond" functionality. This takes in a message as text, applies the cleaning and tokenizing, then feeds through network to assign a tag. 
+- Once we have the predicted tag, can choose a response from our predefined list of responses for each tag. 
