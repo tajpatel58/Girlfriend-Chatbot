@@ -2,7 +2,6 @@
 import torch
 import json
 from Scripts.model import NeuralNet
-from Scripts.training import absolute_path
 from Scripts.text_cleaning import clean_text, bag_of_words
 from nltk.stem import PorterStemmer
 import random
@@ -57,3 +56,13 @@ class Chatbot:
         else:
             return "I'm not sure what you mean, please try a different message. :)"
 
+    def runbot(self):
+        while True:
+            message = input('Radhika: ')
+            if message == 'quit':
+                print('Goodbye xx')
+                break
+            print(f'Taj: {self.respond(message)}')
+
+
+bot = Chatbot('/Users/tajsmac/Documents/Girlfriend-Chatbot/Models/chat_model.pth').runbot()
